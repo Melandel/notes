@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Notes</title>
+		<script src='notes.js'></script>
+	</head>
+</html>
+		<script>
+		console.log("script");
+		addNote(
+			"Notes HTML scaffolding file",
+			function(container) {
+				container.innerHTML = UTILS.HTMLize(window.htmlOriginalScaffoldingString);
+			}	
+		);
+
+		addNote(
+			"Simple HTML note", 
+			"Hello world!<br/>This is my <b>Notes</b> page!"
+		);
+
+		addNote(
+			"Note created by JS function", 
+			function(container) {
+				let redDiv = document.createElement("div");
+					redDiv.style.width = "100px";
+					redDiv.style.height = "100px";
+					redDiv.style.background = "red";
+				container.appendChild(redDiv);
+			}
+		);
+
+		addNote(
+			"Note created from 1 AJAX call", 
+			"https://api.github.com/users/Melandel/repos", 
+			null, // if needed: mail@address.com:basicAuthToken
+			(responseText, containerDiv) => containerDiv.innerHTML = "<pre>" + JSON.stringify(JSON.parse(responseText), null, 2) + "</pre>"
+		);
+
+		addNote(
+			"Note created from n AJAX calls",
+			[
+				"https://api.github.com/users/Melandel", 
+				"https://api.github.com/users/Melandel/repos"
+			],
+			null, // if needed: mail@address.com:basicAuthToken
+			function(responseTexts, containerDiv) {
+				containerDiv.innerHTML = "<table><tr>"
+					+ responseTexts.map(rspText => "<td style='vertical-align:top;border: 1px solid black;'><pre>" + JSON.stringify(JSON.parse(rspText), null, 2) + "</pre></td>").join("\n")
+					+ "</tr></table>"
+				;
+			}
+		);
+		</script>
