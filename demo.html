@@ -3,22 +3,20 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<title>Notes</title>
 		<script src='https://melandel.github.io/notes/notes.js'></script>
+		<script src='https://melandel.github.io/svgdiagram/svgdiagram.js'></script>
 	</head>
 </html>
 		<script>
-		console.log("script");
-		addNote(
-			"Notes HTML scaffolding file",
-			function(container) {
-				container.innerHTML = UTILS.HTMLize(window.htmlOriginalScaffoldingString);
-			}	
-		);
-
 		addNote(
 			"Simple HTML note", 
 			"Hello world!<br/>This is my <b>Notes</b> page!"
 		);
-
+		
+		addNote(
+			"Notes HTML scaffolding file",
+			UTILS.HTMLize(window.htmlOriginalScaffoldingString)
+		);
+		
 		addNote(
 			"Note created by JS function", 
 			function(container) {
@@ -27,6 +25,63 @@
 					redDiv.style.height = "100px";
 					redDiv.style.background = "red";
 				container.appendChild(redDiv);
+			}
+		);
+		
+		addNote(
+			"Note created by svgdiagram", 
+			function(container) {
+				let first = document.createElement("div");
+					first.style.width = "45%";
+					first.style.float = "left";
+				container.appendChild(first);
+				drawDiagram(
+					first,
+					"Title of the first diagram",
+					function(draw) {
+						let helloWorld = draw("Hello world!"),
+							north = draw("north", ".north() | .north(100) | .n() | .n(100)").north(),
+							east = draw("east", ".east()", ".east(100)", ".e()", ".e(100)").east(helloWorld),
+							south = draw("south", ".south() | .south(100) | .s() | .s(100)").south(helloWorld),
+							west = draw("west", ".west()", ".west(100)", ".w()", ".w(100)").west(helloWorld),
+							
+							north2 = draw("north2", ".north(200) | .n(200)").north(helloWorld, 200),
+							east2 = draw("east2", ".east(200)", ".e(200)").east(helloWorld, 200),
+							south2 = draw("south2", ".south(200) | .s(200)").south(helloWorld, 200),
+							west2 = draw("west2", ".west(200)", ".w(200)").west(helloWorld, 200);
+							
+						helloWorld.chain(
+							{chain: "oneToMany"},
+							north.chain(north2),
+							east.chain(east2),
+							south.chain(south2),
+							west.chain(west2)
+						);
+					}
+				);
+				
+				let second = document.createElement("div");
+					second.style.width = "45%";
+					second.style.float = "left";
+				container.appendChild(second);
+				drawDiagram(
+					second,
+					"Title of the second diagram",
+					function(draw) {
+						draw("Hello").move(70,20).chain(
+							draw("world", ".east() | .e()").e(),
+							draw("!", ".east() | .e()").e(),
+							draw("I", ".south() | .s()").s(),
+							draw("am", ".west() | .w()").w(),
+							draw("svgdiagram.", ".west() | .w()").w(),
+							draw("Nice", ".south() | .s()").s(),
+							draw("to", ".east() | .e()").e(),
+							draw("meet", ".east() | .e()").e(),
+							draw("you", ".east() | .e()").e(),
+							draw(":)", ".north() | .n()").n()
+						);
+					}
+				);
 			}
 		);
 

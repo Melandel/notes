@@ -1,4 +1,3 @@
-
 var addNote = function(title, urls, auth, responsesTextsProcessingFunction) {
 	let args = {};
 	if(responsesTextsProcessingFunction) {
