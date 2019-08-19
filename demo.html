@@ -4,6 +4,7 @@
 		<title>Notes</title>
 		<script src='https://melandel.github.io/notes/notes.js'></script>
 		<script src='https://melandel.github.io/svgdiagram/svgdiagram.js'></script>
+		<script src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>
 	</head>
 </html>
 		<script>
@@ -11,7 +12,15 @@
 			"Simple HTML note", 
 			"Hello world!<br/>This is my <b>Notes</b> page!"
 		);
-		
+	
+        addNote(
+            "Note created in Markdown",
+            marked(`
+# Marked in the browser
+
+Rendered by **marked.js**.
+`)
+);
 		addNote(
 			"Notes HTML scaffolding file",
 			UTILS.HTMLize(window.htmlOriginalScaffoldingString)
@@ -38,7 +47,7 @@
 				drawDiagram(
 					first,
 					"Title of the first diagram",
-					function(draw) {
+					function(draw, shouldMatchParentSize) {
 						let helloWorld = draw("Hello world!"),
 							north = draw("north", ".north() | .north(100) | .n() | .n(100)").north(),
 							east = draw("east", ".east()", ".east(100)", ".e()", ".e(100)").east(helloWorld),
@@ -67,7 +76,7 @@
 				drawDiagram(
 					second,
 					"Title of the second diagram",
-					function(draw) {
+					function(draw, shouldMatchParentSize) {
 						draw("Hello").move(70,20).chain(
 							draw("world", ".east() | .e()").e(),
 							draw("!", ".east() | .e()").e(),
